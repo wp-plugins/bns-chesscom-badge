@@ -3,11 +3,14 @@
 Plugin Name: BNS Chess.com Badge
 Plugin URI: http://buynowshop.com/plugins/bns-chesscom-badge
 Description: Chess.com widget that dynamically displays the user's current rating with direct links to Chess.com
-Version: 0.2
+Version: 0.2.1
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GPL2
+License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
+
+/* Last Updated: December 12, 2010 v0.2.1 */
 
 /*  Copyright 2010  Edward Caissie  (email : edward.caissie@gmail.com)
 
@@ -32,7 +35,7 @@ License: GPL2
 
 global $wp_version;
 $exit_message = 'BNS Chess.com Badge requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
-if (version_compare($wp_version, "2.8", "<")) {
+if (version_compare($wp_version, "3.0", "<")) {
 	exit ($exit_message);
 }
 
@@ -40,7 +43,7 @@ if (version_compare($wp_version, "2.8", "<")) {
 add_action( 'wp_head', 'add_BNS_Chesscom_Badge_Header_Code' );
 
 function add_BNS_Chesscom_Badge_Header_Code() {
-  echo '<link type="text/css" rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/bns-chesscom-badge/bns-chesscom-badge-style.css" />' . "\n";
+  echo '<link type="text/css" rel="stylesheet" href="' . home_url() . '/wp-content/plugins/bns-chesscom-badge/bns-chesscom-badge-style.css" />' . "\n";
 }
 
 /* Add function to the widgets_init hook. */
@@ -57,9 +60,9 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         /* Widget settings. */
         $widget_ops = array('classname' => 'bns-chesscom-badge', 'description' => __('Displays a Chess.com member badge.'));
         /* Widget control settings. */
-	$control_ops = array('width' => 200, 'height' => 200, 'id_base' => 'bns-chesscom-badge');
-	/* Create the widget. */
-	$this->WP_Widget('bns-chesscom-badge', 'BNS Chess.com Badge', $widget_ops, $control_ops);
+        $control_ops = array('width' => 200, 'height' => 200, 'id_base' => 'bns-chesscom-badge');
+        /* Create the widget. */
+        $this->WP_Widget('bns-chesscom-badge', 'BNS Chess.com Badge', $widget_ops, $control_ops);
     }
     
     function widget( $args, $instance ) {
@@ -68,7 +71,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         /* User-selected settings. */
         $title = apply_filters('widget_title', $instance['title'] );
         $the_user = $instance['the_user'];
-	$badge = $instance['badge'];
+        $badge = $instance['badge'];
         
         /* Before widget (defined by themes). */
         echo $before_widget;
@@ -102,70 +105,68 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 
 	<?php /* Start badge choices */
 	        switch ($badge) {
-			case "125x125": ?>
-				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
-					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_125x125.gif" alt="" width="125" height="125" />
-				</a>
-			<?php break;
-			case "200x50": ?>
-				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
-					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_200x50.gif" alt="" width="200" height="50" />
-				</a>
-			<?php break;
-			case "100x30": ?>
-				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
-					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_100x30.gif" alt="" width="100" height="30" />
-				</a>
-			<?php break;
-			case "120x60": ?>
-				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
-					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_120x60.gif" alt="" width="120" height="60" />
-				</a>
-			<?php break;
-			case "468x60": ?>
-				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
-					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_468x60_s.gif" alt="" width="468" height="60" />
-				</a>
-			<?php break;
-			case "250x250": ?>
-				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
-					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_250x250_d.gif" alt="" width="250" height="250" />
-				</a>
-			<?php break;
-			case "200x200": ?>
-				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
-					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_200x200_d.gif" alt="" width="200" height="200" />
-				</a>
-			<?php break;
-			case "Default":
-			default: ?>
-				<div style="border: 1px solid #000; width: 170px; overflow: hidden; font-family: Verdana, Arial, sans-serif; margin: 4px auto;">
-				    <div style="border-top: 2px solid #9ac567; border-left: 2px solid #9ac567; border-right: 2px solid #224d00; border-bottom: 2px solid #224d00; background-color: #4a7521; font-size: 12px;">
-					<div style="margin: 4px; background-color: #fff; padding: 4px; text-align: center; border: 1px solid #9ac567;">
-					    <a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>" rel="nofollow" style="font-size: 9px;">
-						<img src="http://cssjs.chesscomfiles.com/images/chesscom_logo.gif" border="0" />
-					    </a>
-					    <a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>" rel="nofollow" style="font-size: 9px;"></a>
-					</div>
-					<div style="text-align: center; margin: 2px; color: #ffe; font-size: 9px;">
-					    <strong>I <a href="http://www.chess.com" style="color: #ffc; text-decoration: none; font-size: 9px;">play chess</a> at Chess.com!</strong>
-					</div>
-					<div style="margin: 4px; background-color: #fff; padding: 6px; border: 1px solid #9ac567;"> <a href="http://www.chess.com/members/view/Cais?ref_id=<?php echo $user_id; ?>" rel="nofollow"><img src="<?php echo $avatar_url; ?>" width="30" height="30" style="float: left; margin: 0 4px 4px 0; border: 1px solid #666;" /></a><a href="http://www.chess.com/members/view/<?php echo $username; ?>?ref_id=<?php echo $user_id; ?>" rel="nofollow"><strong><?php echo $username; ?></strong></a><br />Rating: <strong><?php echo $best_rating; ?></strong><br /><br />
-					    <div style="text-align:center; margin: 8px;">
-						<a href="http://www.chess.com/echess/create_game.html?uid=<?php echo $user_id; ?>&ref_id=<?php echo $user_id; ?>" style="border-top: 2px solid #f7b15b; border-left: 2px solid #f7b15b; border-right: 2px solid #db8213; border-bottom: 2px solid #db8213; background-color: #ff9c21; color: #ffc; padding: 1px 2px; text-decoration: none; font-weight: bold; font-size: 14px;" rel="nofollow">Challenge me!</a>
-					    </div>
-					    <div style="text-align:center;">
-						<a href="http://www.chess.com/home/game_archive.html?member=<?php echo $username; ?>&ref_id=<?php echo $user_id; ?>" rel="nofollow">View my games</a>
-					    </div>
-					</div>
-				    </div>
-				</div>
-			<?php
-		}
-	/* End badge choices */ ?>
-        
-        <?php
-        
+      			case "125x125": ?>
+      				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
+      					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_125x125.gif" alt="" width="125" height="125" />
+      				</a>
+      			<?php break;
+      			case "200x50": ?>
+      				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
+      					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_200x50.gif" alt="" width="200" height="50" />
+      				</a>
+      			<?php break;
+      			case "100x30": ?>
+      				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
+      					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_100x30.gif" alt="" width="100" height="30" />
+      				</a>
+      			<?php break;
+      			case "120x60": ?>
+      				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
+      					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_favorite_120x60.gif" alt="" width="120" height="60" />
+      				</a>
+      			<?php break;
+      			case "468x60": ?>
+      				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
+      					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_468x60_s.gif" alt="" width="468" height="60" />
+      				</a>
+      			<?php break;
+      			case "250x250": ?>
+      				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
+      					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_250x250_d.gif" alt="" width="250" height="250" />
+      				</a>
+      			<?php break;
+      			case "200x200": ?>
+      				<a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>">
+      					<img class="center" src="http://cssjs.chesscomfiles.com/images/badges/chesscom_badge_200x200_d.gif" alt="" width="200" height="200" />
+      				</a>
+      			<?php break;
+      			case "Default":
+      			default: ?>
+    				  <div style="border: 1px solid #000; width: 170px; overflow: hidden; font-family: Verdana, Arial, sans-serif; margin: 4px auto;">
+    				    <div style="border-top: 2px solid #9ac567; border-left: 2px solid #9ac567; border-right: 2px solid #224d00; border-bottom: 2px solid #224d00; background-color: #4a7521; font-size: 12px;">
+        					<div style="margin: 4px; background-color: #fff; padding: 4px; text-align: center; border: 1px solid #9ac567;">
+        					    <a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>" rel="nofollow" style="font-size: 9px;">
+        						<img src="http://cssjs.chesscomfiles.com/images/chesscom_logo.gif" border="0" />
+        					    </a>
+        					    <a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>" rel="nofollow" style="font-size: 9px;"></a>
+        					</div>
+        					<div style="text-align: center; margin: 2px; color: #ffe; font-size: 9px;">
+        					    <strong>I <a href="http://www.chess.com" style="color: #ffc; text-decoration: none; font-size: 9px;">play chess</a> at Chess.com!</strong>
+        					</div>
+        					<div style="margin: 4px; background-color: #fff; padding: 6px; border: 1px solid #9ac567;"> <a href="http://www.chess.com/members/view/Cais?ref_id=<?php echo $user_id; ?>" rel="nofollow"><img src="<?php echo $avatar_url; ?>" width="30" height="30" style="float: left; margin: 0 4px 4px 0; border: 1px solid #666;" /></a><a href="http://www.chess.com/members/view/<?php echo $username; ?>?ref_id=<?php echo $user_id; ?>" rel="nofollow"><strong><?php echo $username; ?></strong></a><br />Rating: <strong><?php echo $best_rating; ?></strong><br /><br />
+        					    <div style="text-align:center; margin: 8px;">
+        						<a href="http://www.chess.com/echess/create_game.html?uid=<?php echo $user_id; ?>&ref_id=<?php echo $user_id; ?>" style="border-top: 2px solid #f7b15b; border-left: 2px solid #f7b15b; border-right: 2px solid #db8213; border-bottom: 2px solid #db8213; background-color: #ff9c21; color: #ffc; padding: 1px 2px; text-decoration: none; font-weight: bold; font-size: 14px;" rel="nofollow">Challenge me!</a>
+        					    </div>
+        					    <div style="text-align:center;">
+        						<a href="http://www.chess.com/home/game_archive.html?member=<?php echo $username; ?>&ref_id=<?php echo $user_id; ?>" rel="nofollow">View my games</a>
+        					    </div>
+        					</div>
+                </div>
+    				  </div>
+            <?php
+          }
+	/* End badge choices */
+	
         /* After widget (defined by themes). */
         echo $after_widget;
     }
@@ -176,7 +177,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         /* Strip tags (if needed) and update the widget settings. */
         $instance['title']      = strip_tags( $new_instance['title'] );
         $instance['the_user']   = strip_tags( $new_instance['the_user'] );
-	$instance['badge']	= $new_instance['badge'];
+        $instance['badge']	= $new_instance['badge'];
         
         return $instance;
     }
@@ -186,7 +187,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         $defaults = array(
             'title'     => __('Chess.com'),
             'the_user'  => '',
-	    'badge'	=> 'default',
+            'badge'     => 'default',
             );
         $instance = wp_parse_args( (array) $instance, $defaults );
         ?>
@@ -198,20 +199,21 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 		<label for="<?php echo $this->get_field_id( 'the_user' ); ?>"><?php _e('Enter your Chess.com user name:'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'the_user' ); ?>" name="<?php echo $this->get_field_name( 'the_user' ); ?>" value="<?php echo $instance['the_user']; ?>" style="width:100%;" />
         </p>
-	<p>
-		<label for="<?php echo $this->get_field_id( 'badge' ); ?>"><?php _e('Choose Badge Size:'); ?></label> 
-		<select id="<?php echo $this->get_field_id( 'badge' ); ?>" name="<?php echo $this->get_field_name( 'badge' ); ?>" class="widefat">
-			<option <?php if ( 'Default' == $instance['badge'] ) echo 'selected="selected"'; ?>>Default</option>
-			<option <?php if ( '125x125' == $instance['badge'] ) echo 'selected="selected"'; ?>>125x125</option>
-			<option <?php if ( '200x50' == $instance['badge'] ) echo 'selected="selected"'; ?>>200x50</option>
-			<option <?php if ( '100x30' == $instance['badge'] ) echo 'selected="selected"'; ?>>100x30</option>
-			<option <?php if ( '120x60' == $instance['badge'] ) echo 'selected="selected"'; ?>>120x60</option>
-			<option <?php if ( '468x60' == $instance['badge'] ) echo 'selected="selected"'; ?>>468x60</option>
-			<option <?php if ( '250x250' == $instance['badge'] ) echo 'selected="selected"'; ?>>250x250</option>
-			<option <?php if ( '200x200' == $instance['badge'] ) echo 'selected="selected"'; ?>>200x200</option>
-		</select>
-	</p>
+      	<p>
+      		<label for="<?php echo $this->get_field_id( 'badge' ); ?>"><?php _e('Choose Badge Size:'); ?></label> 
+      		<select id="<?php echo $this->get_field_id( 'badge' ); ?>" name="<?php echo $this->get_field_name( 'badge' ); ?>" class="widefat">
+      			<option <?php if ( 'Default' == $instance['badge'] ) echo 'selected="selected"'; ?>>Default</option>
+      			<option <?php if ( '125x125' == $instance['badge'] ) echo 'selected="selected"'; ?>>125x125</option>
+      			<option <?php if ( '200x50' == $instance['badge'] ) echo 'selected="selected"'; ?>>200x50</option>
+      			<option <?php if ( '100x30' == $instance['badge'] ) echo 'selected="selected"'; ?>>100x30</option>
+      			<option <?php if ( '120x60' == $instance['badge'] ) echo 'selected="selected"'; ?>>120x60</option>
+      			<option <?php if ( '468x60' == $instance['badge'] ) echo 'selected="selected"'; ?>>468x60</option>
+      			<option <?php if ( '250x250' == $instance['badge'] ) echo 'selected="selected"'; ?>>250x250</option>
+      			<option <?php if ( '200x200' == $instance['badge'] ) echo 'selected="selected"'; ?>>200x200</option>
+      		</select>
+      	</p>
         <?php
     }
 }
-/* May 22, 2010 */ ?>
+?>
+<?php /* Last Revision December 12, 2010 v0.2.1 */ ?>

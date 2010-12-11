@@ -2,9 +2,9 @@
 Contributors: cais
 Donate link: http://buynowshop.com
 Tags: Chess.com, dynamic ratings
-Requires at least: 2.8
-Tested up to: 3.0
-Stable tag: 0.2
+Requires at least: 3.0
+Tested up to: 3.1
+Stable tag: 0.2.1
 
 Dynamically displays a Chess.com user's current rating.
 
@@ -64,6 +64,10 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.2.1 =
+* released December 11, 2010
+* Confirmed compatible with WordPress 3.1 (beta)
+
 = 0.2 =
 * Release date: May 22, 2010
 * Added options for all current (as of May 22, 2010) badge sizes available from Chess.com
