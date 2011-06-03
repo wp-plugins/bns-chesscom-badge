@@ -3,16 +3,16 @@
 Plugin Name: BNS Chess.com Badge
 Plugin URI: http://buynowshop.com/plugins/bns-chesscom-badge
 Description: Chess.com widget that dynamically displays the user's current rating with direct links to Chess.com
-Version: 0.2.1
+Version: 0.3
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GPL2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-/* Last Updated: December 12, 2010 v0.2.1 */
+/* Last Updated: June 3, 2011 v0.3 */
 
-/*  Copyright 2010  Edward Caissie  (email : edward.caissie@gmail.com)
+/*  Copyright 2010-2011  Edward Caissie  (email : edward.caissie@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -35,16 +35,17 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 global $wp_version;
 $exit_message = 'BNS Chess.com Badge requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>';
-if (version_compare($wp_version, "3.0", "<")) {
+if (version_compare($wp_version, "2.8", "<")) { /* for `register_widget` */
 	exit ($exit_message);
 }
 
-/* Add BNS Chess.com Badge Style sheet */
-add_action( 'wp_head', 'add_BNS_Chesscom_Badge_Header_Code' );
-
-function add_BNS_Chesscom_Badge_Header_Code() {
-  echo '<link type="text/css" rel="stylesheet" href="' . home_url() . '/wp-content/plugins/bns-chesscom-badge/bns-chesscom-badge-style.css" />' . "\n";
+// Add BNS Inline Aside Stylesheets
+function BNS_Chesscom_Scripts_and_Styles() {
+  if ( ! is_admin() ) {
+  	wp_enqueue_style( 'BNS-Chesscom-Style', plugin_dir_url( __FILE__ ) . '/bns-chesscom-badge-style.css', array(), '0.4.1', 'screen' );
+  }
 }
+add_action( 'wp_enqueue_scripts', 'BNS_Chesscom_Scripts_and_Styles' );
 
 /* Add function to the widgets_init hook. */
 add_action( 'widgets_init', 'load_my_bns_chesscom_badge_widget' );
@@ -58,7 +59,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 
     function BNS_Chesscom_Badge_Widget() {
         /* Widget settings. */
-        $widget_ops = array('classname' => 'bns-chesscom-badge', 'description' => __('Displays a Chess.com member badge.'));
+        $widget_ops = array('classname' => 'bns-chesscom-badge', 'description' => __('Displays a Chess.com member badge in a widget area; or, with a shortcode.'));
         /* Widget control settings. */
         $control_ops = array('width' => 200, 'height' => 200, 'id_base' => 'bns-chesscom-badge');
         /* Create the widget. */
@@ -177,7 +178,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         /* Strip tags (if needed) and update the widget settings. */
         $instance['title']      = strip_tags( $new_instance['title'] );
         $instance['the_user']   = strip_tags( $new_instance['the_user'] );
-        $instance['badge']	= $new_instance['badge'];
+        $instance['badge']      = $new_instance['badge'];
         
         return $instance;
     }
@@ -192,28 +193,52 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         $instance = wp_parse_args( (array) $instance, $defaults );
         ?>
         <p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:'); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+      		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:'); ?></label>
+      		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
         </p>
         <p>
-		<label for="<?php echo $this->get_field_id( 'the_user' ); ?>"><?php _e('Enter your Chess.com user name:'); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id( 'the_user' ); ?>" name="<?php echo $this->get_field_name( 'the_user' ); ?>" value="<?php echo $instance['the_user']; ?>" style="width:100%;" />
+      		<label for="<?php echo $this->get_field_id( 'the_user' ); ?>"><?php _e('Enter your Chess.com user name:'); ?></label>
+      		<input class="widefat" id="<?php echo $this->get_field_id( 'the_user' ); ?>" name="<?php echo $this->get_field_name( 'the_user' ); ?>" value="<?php echo $instance['the_user']; ?>" style="width:100%;" />
         </p>
       	<p>
       		<label for="<?php echo $this->get_field_id( 'badge' ); ?>"><?php _e('Choose Badge Size:'); ?></label> 
       		<select id="<?php echo $this->get_field_id( 'badge' ); ?>" name="<?php echo $this->get_field_name( 'badge' ); ?>" class="widefat">
-      			<option <?php if ( 'Default' == $instance['badge'] ) echo 'selected="selected"'; ?>>Default</option>
-      			<option <?php if ( '125x125' == $instance['badge'] ) echo 'selected="selected"'; ?>>125x125</option>
-      			<option <?php if ( '200x50' == $instance['badge'] ) echo 'selected="selected"'; ?>>200x50</option>
-      			<option <?php if ( '100x30' == $instance['badge'] ) echo 'selected="selected"'; ?>>100x30</option>
-      			<option <?php if ( '120x60' == $instance['badge'] ) echo 'selected="selected"'; ?>>120x60</option>
-      			<option <?php if ( '468x60' == $instance['badge'] ) echo 'selected="selected"'; ?>>468x60</option>
-      			<option <?php if ( '250x250' == $instance['badge'] ) echo 'selected="selected"'; ?>>250x250</option>
-      			<option <?php if ( '200x200' == $instance['badge'] ) echo 'selected="selected"'; ?>>200x200</option>
+      			<option <?php selected( 'Default', $instance['badge'], true ); ?>>Default</option>
+      			<option <?php selected( '125x125', $instance['badge'], true ); ?>>125x125</option>
+      			<option <?php selected( '200x50', $instance['badge'], true ); ?>>200x50</option>
+      			<option <?php selected( '100x30', $instance['badge'], true ); ?>>100x30</option>
+      			<option <?php selected( '120x60', $instance['badge'], true ); ?>>120x60</option>
+      			<option <?php selected( '468x60', $instance['badge'], true ); ?>>468x60</option>
+      			<option <?php selected( '250x250', $instance['badge'], true ); ?>>250x250</option>
+      			<option <?php selected( '200x200', $instance['badge'], true ); ?>>200x200</option>
       		</select>
       	</p>
         <?php
     }
 }
+
+/* BNS Chess.com Badge Shortcode Start - May the Gods of programming protect us all! */
+function bns_chess_shortcode( $atts ) {
+    ob_start(); /* Get ready to capture the elusive widget output */
+    the_widget(
+      'BNS_Chesscom_Badge_Widget',
+      $instance = shortcode_atts( array(
+  				'title'     => __( '' ),
+          'the_user'  => '',
+          'badge'     => 'default'
+  				), $atts),
+  		$args = array(
+          $before_widget = '',
+          $after_widget = '',
+          $before_title = '',
+          $after_title = '',
+      )
+    );
+    $bns_chess_content = ob_get_contents(); /* Get the_widget output and put into its own container */
+    ob_end_clean(); /* All your snipes belong to us! */
+
+    return $bns_chess_content;
+}
+add_shortcode( 'bns_chess', 'bns_chess_shortcode' );
+/* BNS Chess.com Badge Shortcode End - Say your prayers ... */
 ?>
-<?php /* Last Revision December 12, 2010 v0.2.1 */ ?>

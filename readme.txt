@@ -1,16 +1,16 @@
 === BNS Chess.com Badge ===
 Contributors: cais
 Donate link: http://buynowshop.com
-Tags: Chess.com, dynamic ratings
-Requires at least: 3.0
-Tested up to: 3.1
-Stable tag: 0.2.1
+Tags: Chess.com, dynamic ratings, shortcode, widget
+Requires at least: 2.8
+Tested up to: 3.2
+Stable tag: 0.3
 
 Dynamically displays a Chess.com user's current rating.
 
 == Description ==
 
-Chess.com "badge" that dynamically displays the user's current rating with direct links to Chess.com
+Chess.com "badge" that dynamically displays, in a widget area or with a shortcode, the user's current rating with direct links to Chess.com
 
 == Installation ==
 
@@ -29,7 +29,21 @@ This section describes how to install the plugin and get it working.
 5. Activate through the 'Plugins' menu.
 6. Read http://wpfirstaid.com/2009/12/plugin-installation/
 
+= Shortcode: bns_chess =
+Parameters are very similar to the plugin:
+
+*   'title'     => __( '' )
+*   'the_user'  => ''
+*   'badge'     => 'default'
+
+Current badge sizes: 125x125, 200x50, 100x30, 120x60, 468x60, 250x250, 200x200, and the default.
+
+NB: Use the shortcode at your own risk!
+
 == Frequently Asked Questions ==
+= How can I get support for this plugin? =
+
+Please note, support may be available on the WordPress Support forums; but, it may be faster to visit http://buynowshop.com/plugins/bns-chesscom-badge/ and leave a comment with the issue you are experiencing.
 
 = Do I have to do anything besides enter my user name? =
 
@@ -40,7 +54,7 @@ No. The plugin will retrieve all the necessary details based on the user name en
 1. The option panel.
 
 == Other Notes ==
-* Copyright 2010  Edward Caissie  (email : edward.caissie@gmail.com)
+* Copyright 2010-2011  Edward Caissie  (email : edward.caissie@gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2,
@@ -64,6 +78,13 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.3 =
+* released June 2011
+* confirm compatible with WordPress version 3.2-beta2-18085
+* enqueue style sheet
+* note minimum required version as 2.8 for the use of `register_widget` et al.
+* added shortcode functionality
+
 = 0.2.1 =
 * released December 11, 2010
 * Confirmed compatible with WordPress 3.1 (beta)
