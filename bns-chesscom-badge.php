@@ -39,11 +39,11 @@ if (version_compare($wp_version, "2.8", "<")) { /* for `register_widget` */
 	exit ($exit_message);
 }
 
-// Add BNS Inline Aside Stylesheets
+// Add BNS Chess.com Badge Aside Stylesheets
 function BNS_Chesscom_Scripts_and_Styles() {
-  if ( ! is_admin() ) {
-  	wp_enqueue_style( 'BNS-Chesscom-Style', plugin_dir_url( __FILE__ ) . '/bns-chesscom-badge-style.css', array(), '0.4.1', 'screen' );
-  }
+    /* Scripts */
+    /* Styles */
+  	wp_enqueue_style( 'BNS-Chesscom-Style', plugin_dir_url( __FILE__ ) . '/bns-chesscom-badge-style.css', array(), '0.3', 'screen' );
 }
 add_action( 'wp_enqueue_scripts', 'BNS_Chesscom_Scripts_and_Styles' );
 
