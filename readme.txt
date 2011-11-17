@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: Chess.com, dynamic ratings, shortcode, widget
 Requires at least: 2.8
-Tested up to: 3.2
-Stable tag: 0.3
+Tested up to: 3.3
+Stable tag: 0.4
 
 Dynamically displays a Chess.com user's current rating.
 
@@ -78,6 +78,13 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.4 =
+* released November 2011
+* confirmed compatible with WordPress 3.3
+* added phpDoc Style documentation
+* added i18n support
+* added conditional enqueue of `bns-chesscom-badge-custom-style.css` stylesheet
+
 = 0.3 =
 * released June 2011
 * confirm compatible with WordPress version 3.2-beta2-18085
