@@ -3,7 +3,7 @@
 Plugin Name: BNS Chess.com Badge
 Plugin URI: http://buynowshop.com/plugins/bns-chesscom-badge
 Description: Chess.com widget that dynamically displays the user's current rating with direct links to Chess.com
-Version: 0.4
+Version: 0.4.1
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 License: GNU General Public License v2
@@ -20,9 +20,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-chesscom-badge/
  * @link        https://github.com/Cais/bns-chesscom-badge/
  * @link        http://wordpress.org/extend/plugins/bns-chesscom-badge/
- * @version     0.4
+ * @version     0.4.1
  * @author      Edward Caissie <edward.caissie@gmail.com>
- * @copyright   Copyright (c) 2010-2011, Edward Caissie
+ * @copyright   Copyright (c) 2010-2012, Edward Caissie
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License version 2, as published by the
@@ -200,7 +200,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
                     case "Default":
                         default: ?>
                             <div style="border: 1px solid #000; width: 170px; overflow: hidden; font-family: Verdana, Arial, sans-serif; margin: 4px auto;">
-                                <div style="border-top: 2px solid #9ac567; border-left: 2px solid #9ac567; border-right: 2px solid #224d00; border-bottom: 2px solid #224d00; background-color: #4a7521; font-size: 12px;">
+                                <div style="border: 2px solid #9ac567; border-right-color: #224d00; border-bottom-color: #224d00; background-color: #4a7521; font-size: 12px;">
                                     <div style="margin: 4px; background-color: #fff; padding: 4px; text-align: center; border: 1px solid #9ac567;">
                                         <a href="http://www.chess.com?ref_id=<?php echo $user_id; ?>" rel="nofollow" style="font-size: 9px;">
                                             <img src="http://cssjs.chesscomfiles.com/images/chesscom_logo.gif" alt="" border="0" />
@@ -274,9 +274,9 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
  * BNS Chess.com Badge Shortcode Start
  * - May the Gods of programming protect us all!
  *
- * @param $atts
+ * @param   $atts
  *
- * @return ob_get_contents
+ * @return  string created with ob_get_contents
  */
 function bns_chess_shortcode( $atts ) {
         /** Get ready to capture the elusive widget output */
@@ -304,4 +304,3 @@ function bns_chess_shortcode( $atts ) {
 }
 add_shortcode( 'bns_chess', 'bns_chess_shortcode' );
 // BNS Chess.com Badge Shortcode End - Say your prayers ...
-?>

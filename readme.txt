@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: Chess.com, dynamic ratings, shortcode, widget
 Requires at least: 2.8
-Tested up to: 3.3
-Stable tag: 0.4
+Tested up to: 3.4
+Stable tag: 0.4.1
 
 Dynamically displays a Chess.com user's current rating.
 
@@ -54,7 +54,7 @@ No. The plugin will retrieve all the necessary details based on the user name en
 1. The option panel.
 
 == Other Notes ==
-* Copyright 2010-2011  Edward Caissie  (email : edward.caissie@gmail.com)
+* Copyright 2010-2012  Edward Caissie  (email : edward.caissie@gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2,
@@ -78,6 +78,10 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.4.1 =
+* confirmed compatible with WordPress 3.4
+* inline css optimizations
+
 = 0.4 =
 * released November 2011
 * confirmed compatible with WordPress 3.3
