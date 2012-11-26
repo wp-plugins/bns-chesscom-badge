@@ -3,17 +3,16 @@
 Plugin Name: BNS Chess.com Badge
 Plugin URI: http://buynowshop.com/plugins/bns-chesscom-badge
 Description: Chess.com widget that dynamically displays the user's current rating with direct links to Chess.com
-Version: 0.4.2
+Version: 0.5
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
-Textdomain: bns-cb
+Text Domain: bns-cb
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 /**
  * BNS Chess.com Badge
- *
  * Chess.com widget that dynamically displays the user's current rating with
  * direct links to Chess.com
  *
@@ -45,8 +44,12 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @date    August 2, 2012
- * Documentation / 'readme.txt' updates
+ * @version 0.5
+ * @date    November 26, 2012
+ * Add conditional check to displaying online statuses or not
+ * Removed load_plugin_textdomain as redundant
+ *
+ * @todo Improve error checking for the user name
  */
 
 /**
@@ -70,21 +73,7 @@ if ( version_compare( $wp_version, "2.8", "<" ) ) {
 }
 
 /**
- * BNS Chess.com Badge TextDomain
- * Make plugin text available for translation (i18n)
- *
- * @package:    BNS_Chesscom_Badge
- * @since:      0.4
- *
- * @internal    Note: Translation files are expected to be found in the plugin root folder / directory.
- * @internal    `bns-cb` is being used in place of `bns-chesscom-badge`
- */
-load_plugin_textdomain( 'bns-cb' );
-// End: BNS Chess.com Badge TextDomain
-
-/**
  * Enqueue Plugin Scripts and Styles
- *
  * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
  *
  * @package BNS_Chesscom_Badge
@@ -140,9 +129,10 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
     function widget( $args, $instance ) {
         extract( $args );
         /** User-selected settings */
-        $title = apply_filters( 'widget_title', $instance['title'] );
-        $the_user = $instance['the_user'];
-        $badge = $instance['badge'];
+        $title      = apply_filters( 'widget_title', $instance['title'] );
+        $the_user   = $instance['the_user'];
+        $badge      = $instance['badge'];
+        $status     = $instance['status'];
 
         /** @var    $before_widget  string - defined by theme */
         echo $before_widget;
@@ -244,6 +234,13 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         <?php }
         // End badge choices
 
+        /** Conditional check to displaying online statuses or not */
+        if ( ( 'online' == $online_status_image_url ) && ( true == $instance['status'] ) ) {
+            echo apply_filters( 'bnscb_online_text', sprintf( '<div class="bnscb_online bnscb_status">%1$s</div>', __( 'I am online and ready to play!', 'bns-cb' ) ) );
+        } elseif ( ( 'offline' == $online_status_image_url ) && ( true == $instance['status'] ) ) {
+            echo apply_filters( 'bnscb_online_text', sprintf( '<div class="bnscb_offline bnscb_status">%1$s</div>', __( 'I am offline but accepting challenges!', 'bns-cb' ) ) );
+        }
+
         /** @var    $after_widget   string - defined by theme */
         echo $after_widget;
     }
@@ -254,6 +251,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         $instance['title']      = strip_tags( $new_instance['title'] );
         $instance['the_user']   = strip_tags( $new_instance['the_user'] );
         $instance['badge']      = $new_instance['badge'];
+        $instance['status']     = $new_instance['status'];
         return $instance;
     }
 
@@ -261,8 +259,9 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
         /** Set default widget settings */
         $defaults = array(
             'title'     => __( 'Chess.com', 'bns-cb' ),
-            'the_user'  => '',
+            'the_user'  => 'CHESScom',
             'badge'     => 'default',
+            'status'    => false,
         );
         $instance = wp_parse_args( (array) $instance, $defaults );
         ?>
@@ -271,10 +270,12 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'bns-cb' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
         </p>
+
         <p>
             <label for="<?php echo $this->get_field_id( 'the_user' ); ?>"><?php _e( 'Enter your Chess.com user name:', 'bns-cb' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'the_user' ); ?>" name="<?php echo $this->get_field_name( 'the_user' ); ?>" value="<?php echo $instance['the_user']; ?>" style="width:100%;" />
         </p>
+
         <p>
             <label for="<?php echo $this->get_field_id( 'badge' ); ?>"><?php _e( 'Choose Badge Size:', 'bns-cb' ); ?></label>
             <select id="<?php echo $this->get_field_id( 'badge' ); ?>" name="<?php echo $this->get_field_name( 'badge' ); ?>" class="widefat">
@@ -288,6 +289,12 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
                 <option <?php selected( '200x200', $instance['badge'], true ); ?>>200x200</option>
             </select>
         </p>
+
+        <p><!-- This (checkbox) is used to turn on or off if the message is displayed -->
+            <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['status'], true ); ?> id="<?php echo $this->get_field_id( 'status' ); ?>" name="<?php echo $this->get_field_name( 'status' ); ?>" />
+            <label for="<?php echo $this->get_field_id( 'status' ); ?>"><?php _e( 'Show your online status?', 'bns-cb' ); ?></label>
+        </p>
+
     <?php }
 } // End class BNS_Chesscom_Badge_Widget
 
@@ -313,7 +320,8 @@ function bns_chess_shortcode( $atts ) {
         $instance = shortcode_atts( array(
             'title'     => __( '', 'bns-cb' ),
             'the_user'  => '',
-            'badge'     => 'default'
+            'badge'     => 'default',
+            'status'    => false,
         ), $atts),
         $args = array(
             /** clear variables defined by theme for widgets */
@@ -324,9 +332,7 @@ function bns_chess_shortcode( $atts ) {
         )
     );
     /** Get the_widget output and put into its own container */
-    $bns_chess_content = ob_get_contents();
-    ob_end_clean();
-    // All your snipes belong to us!
+    $bns_chess_content = ob_get_clean();
 
     return $bns_chess_content;
 }

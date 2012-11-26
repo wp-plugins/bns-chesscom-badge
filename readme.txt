@@ -1,10 +1,10 @@
 === BNS Chess.com Badge ===
 Contributors: cais
 Donate link: http://buynowshop.com
-Tags: Chess.com, dynamic ratings, shortcode, widget
+Tags: Chess.com, dynamic ratings, shortcode, widget-only
 Requires at least: 2.8
-Tested up to: 3.4.1
-Stable tag: 0.4.2
+Tested up to: 3.5
+Stable tag: 0.5
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -80,6 +80,12 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.5 =
+* Release November 2012
+* Added conditional check to displaying online statuses or not
+* Added CSS wrappers and styles for online status text
+* Removed load_plugin_textdomain as redundant
+
 = 0.4.2 =
 * documentation updates
 * added license reference to 'readme.txt'
