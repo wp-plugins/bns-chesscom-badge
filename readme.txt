@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: Chess.com, dynamic ratings, shortcode, widget-only
 Requires at least: 2.8
-Tested up to: 3.5
-Stable tag: 0.5
+Tested up to: 3.5.1
+Stable tag: 0.6
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -56,7 +56,7 @@ No. The plugin will retrieve all the necessary details based on the user name en
 1. The option panel.
 
 == Other Notes ==
-* Copyright 2010-2012  Edward Caissie  (email : edward.caissie@gmail.com)
+* Copyright 2010-2013  Edward Caissie  (email : edward.caissie@gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2,
@@ -80,6 +80,11 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.6 =
+* Release February 2013
+* Refactor code into class structure
+* Added sanity check if user name is present
+
 = 0.5 =
 * Release November 2012
 * Added conditional check to displaying online statuses or not
