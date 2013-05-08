@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: Chess.com, dynamic ratings, shortcode, widget-only
 Requires at least: 2.8
-Tested up to: 3.5.1
-Stable tag: 0.6
+Tested up to: 3.6
+Stable tag: 0.6.1
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -80,6 +80,10 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.6.1 =
+* Release May 2013
+* Version number compatibility updates
+
 = 0.6 =
 * Release February 2013
 * Refactor code into class structure

@@ -3,7 +3,7 @@
 Plugin Name: BNS Chess.com Badge
 Plugin URI: http://buynowshop.com/plugins/bns-chesscom-badge
 Description: Chess.com widget that dynamically displays the user's current rating with direct links to Chess.com
-Version: 0.6
+Version: 0.6.1
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Text Domain: bns-cb
