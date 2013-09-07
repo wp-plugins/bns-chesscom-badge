@@ -3,7 +3,7 @@
 Plugin Name: BNS Chess.com Badge
 Plugin URI: http://buynowshop.com/plugins/bns-chesscom-badge
 Description: Chess.com widget that dynamically displays the user's current rating with direct links to Chess.com
-Version: 0.6.1
+Version: 0.6.2
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Text Domain: bns-cb
@@ -20,7 +20,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-chesscom-badge/
  * @link        https://github.com/Cais/bns-chesscom-badge/
  * @link        http://wordpress.org/extend/plugins/bns-chesscom-badge/
- * @version     0.6
+ * @version     0.6.2
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2010-2013, Edward Caissie
  *
@@ -53,6 +53,9 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @date    February 12, 2013
  * Refactored code into the class structure
  * Added sanity check if user name is present
+ *
+ * @version 0.6.2
+ * @date    September 2013
  */
 
 class BNS_Chesscom_Badge_Widget extends WP_Widget {
@@ -332,6 +335,10 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
      * @uses    shortcode_atts
      *
      * @return  string created with ob_get_contents
+     *
+     * @version 0.6.2
+     * @date    September 7, 2013
+     * Added third parameter to `shortcode_atts` for automatic filter creation
      */
     function bns_chess_shortcode( $atts ) {
         /** Get ready to capture the elusive widget output */
@@ -343,7 +350,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
                 'the_user'  => '',
                 'badge'     => 'default',
                 'status'    => false,
-            ), $atts),
+            ), $atts, 'bns_chess' ),
             $args = array(
                 /** clear variables defined by theme for widgets */
                 $before_widget = '',
