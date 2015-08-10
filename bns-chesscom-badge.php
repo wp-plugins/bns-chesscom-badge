@@ -3,7 +3,7 @@
 Plugin Name: BNS Chess.com Badge
 Plugin URI: http://buynowshop.com/plugins/bns-chesscom-badge
 Description: Chess.com widget that dynamically displays the user's current rating with direct links to Chess.com
-Version: 0.7
+Version: 0.8
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Text Domain: bns-chesscom-badge
@@ -20,7 +20,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @link        http://buynowshop.com/plugins/bns-chesscom-badge/
  * @link        https://github.com/Cais/bns-chesscom-badge/
  * @link        https://wordpress.org/plugins/bns-chesscom-badge/
- * @version     0.7
+ * @version     0.8
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2010-2015, Edward Caissie
  *
@@ -44,8 +44,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * The license for this software can also likely be found here:
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version     0.7
- * @date        April 2015
+ * @version     0.8
+ * @date        August 2015
  */
 class BNS_Chesscom_Badge_Widget extends WP_Widget {
 
@@ -74,13 +74,15 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 			'classname'   => 'bns-chesscom-badge',
 			'description' => __( 'Displays a Chess.com member badge in a widget area; or, with a shortcode.', 'bns-chesscom-badge' )
 		);
+
 		/** Widget control settings */
 		$control_ops = array(
 			'width'   => 200,
 			'id_base' => 'bns-chesscom-badge'
 		);
+
 		/** Create the widget */
-		$this->WP_Widget( 'bns-chesscom-badge', 'BNS Chess.com Badge', $widget_ops, $control_ops );
+		parent::__construct( 'bns-chesscom-badge', 'BNS Chess.com Badge', $widget_ops, $control_ops );
 
 		/** Add scripts and styles */
 		add_action(
@@ -98,8 +100,6 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 
 	}
 
-	/** End function - BNS Chesscom Badge Widget (constructor) */
-
 
 	/**
 	 * Widget
@@ -114,6 +114,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 	 * @uses    apply_filters
 	 */
 	function widget( $args, $instance ) {
+
 		extract( $args );
 		/** User-selected settings */
 		$title    = apply_filters( 'widget_title', $instance['title'] );
@@ -123,6 +124,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 
 		/** @var $the_user - the user name trimmed of any white space */
 		$the_user = trim( $the_user );
+
 		/** Sanity check - was a user name entered */
 		if ( empty( $the_user ) ) {
 			return;
@@ -130,6 +132,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 
 		/** @var    $before_widget  string - defined by theme */
 		echo $before_widget;
+
 		/** Widget $title, $before_widget, and $after_widget defined by theme */
 		if ( $title ) {
 			/**
@@ -238,9 +241,8 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 						</div>
 					</div>
 				</div>
-			<?php
+				<?php
 		}
-		/** End badge choices */
 
 		/** Conditional check to displaying online statuses or not */
 		if ( ( 'online' == $online_status_image_url ) && ( true == $instance['status'] ) ) {
@@ -267,6 +269,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 	 * @return  array
 	 */
 	function update( $new_instance, $old_instance ) {
+
 		$instance = $old_instance;
 		/** Strip tags (if needed) and update the widget settings */
 		$instance['title']    = strip_tags( $new_instance['title'] );
@@ -275,6 +278,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 		$instance['status']   = $new_instance['status'];
 
 		return $instance;
+
 	}
 
 
@@ -295,6 +299,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 	 * @return  string|void
 	 */
 	function form( $instance ) {
+
 		/** Set default widget settings */
 		$defaults = array(
 			'title'    => __( 'Chess.com', 'bns-chesscom-badge' ),
@@ -302,8 +307,8 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 			'badge'    => 'default',
 			'status'   => false,
 		);
-		$instance = wp_parse_args( (array) $instance, $defaults );
-		?>
+
+		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'bns-chesscom-badge' ); ?></label>
@@ -334,8 +339,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'status' ); ?>"><?php _e( 'Show your online status?', 'bns-chesscom-badge' ); ?></label>
 		</p>
 
-	<?php
-	}
+	<?php }
 
 
 	/**
@@ -355,6 +359,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 	 * Programmatically add version number to enqueue calls
 	 */
 	function BNS_Chesscom_Scripts_and_Styles() {
+
 		/** Call the wp-admin plugin code */
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		/** @var $bnscb_data - holds the plugin header data */
@@ -390,6 +395,7 @@ class BNS_Chesscom_Badge_Widget extends WP_Widget {
 	 * Added third parameter to `shortcode_atts` for automatic filter creation
 	 */
 	function bns_chess_shortcode( $atts ) {
+
 		/** Get ready to capture the elusive widget output */
 		ob_start();
 		the_widget(
@@ -494,7 +500,6 @@ function bnscb_in_plugin_update_message( $args ) {
 						if ( $ul ) {
 							$upgrade_notice .= '</ul><div style="clear: left;"></div>';
 						}
-						/** End if - unordered list created */
 
 						$upgrade_notice .= '<hr/>';
 						continue;
@@ -511,7 +516,6 @@ function bnscb_in_plugin_update_message( $args ) {
 							$return_value = '<ul">';
 							$ul           = true;
 						}
-						/** End if - unordered list not started */
 
 						$line = preg_replace( '~^\s*\*\s*~', '', htmlspecialchars( $line ) );
 						$return_value .= '<li style=" ' . ( $index % 2 == 0 ? 'clear: left;' : '' ) . '">' . $line . '</li>';
@@ -525,7 +529,6 @@ function bnscb_in_plugin_update_message( $args ) {
 						} else {
 							$return_value .= '<p>' . $line . '</p>';
 						}
-						/** End if - unordered list started */
 
 					}
 					/** End if - non-blank line */
@@ -533,7 +536,6 @@ function bnscb_in_plugin_update_message( $args ) {
 					$upgrade_notice .= wp_kses_post( preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $return_value ) );
 
 				}
-				/** End foreach - line parsing */
 
 				$upgrade_notice .= '</div>';
 
@@ -541,17 +543,14 @@ function bnscb_in_plugin_update_message( $args ) {
 			/** End if - version compare */
 
 		}
-		/** End if - response message exists */
 
 		/** Set transient - minimize calls to WordPress */
 		set_transient( $transient_name, $upgrade_notice, DAY_IN_SECONDS );
 
 	}
-	/** End if - transient check */
 
 	echo $upgrade_notice;
 
 }
 
-/** End function - in plugin update message */
 add_action( 'in_plugin_update_message-' . plugin_basename( __FILE__ ), 'bnscb_in_plugin_update_message' );

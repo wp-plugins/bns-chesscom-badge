@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: Chess.com, dynamic ratings, shortcode, widget-only
 Requires at least: 3.6
-Tested up to: 4.2
-Stable tag: 0.7
+Tested up to: 4.3
+Stable tag: 0.8
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -80,6 +80,10 @@ No. The plugin will retrieve all the necessary details based on the user name en
 * Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.8 =
+* Released August 2015
+* Updated to PHP5 object constructors
+
 = 0.7 =
 * Released April 2015
 * Added "BNS Chess.com Badge Update Message" function
